@@ -84,9 +84,7 @@ public class GameState {
 
         if (gameBoard.getTargetCellsPositions().contains(targetPosition)) {
             gameBoard.setCurrentTargetCellsCompleted(currentTargetCellsCompleted + 1);
-        }
-
-        if (isBoxBlocked(targetPosition)) {
+        } else if (isBoxBlocked(targetPosition)) {
             stuckBox = true;
         }
     }
