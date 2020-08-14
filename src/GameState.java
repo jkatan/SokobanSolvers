@@ -146,9 +146,7 @@ public class GameState {
 
         if (targetCellsPositions.contains(targetPosition)) {
             currentTargetCellsCompleted += 1;
-        }
-
-        if (isBoxBlocked(targetPosition)) {
+        } else if (isBoxBlocked(targetPosition)) {
             stuckBox = true;
         }
     }
