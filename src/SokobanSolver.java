@@ -9,31 +9,30 @@ public class SokobanSolver {
         String filePath = args[0];
         GameBoard gameBoard = new GameBoard(filePath);
         HashSet<Integer> gameBoardVisited = new HashSet<>();
-        System.out.println(gameBoard);
+        System.out.println(gameBoard.toString());
 
         Scanner inputReader = new Scanner(System.in);
         String input;
         while(!(input = inputReader.nextLine()).equals("exit")) {
             GameState gameState = new GameState(gameBoard);
-            Point newPlayerPosition = gameBoard.getPlayerPosition();
             switch (input) {
                 case "right": case "d":
-                    newPlayerPosition = gameState.movePlayer(Direction.RIGHT);
+                    gameState.movePlayer(Direction.RIGHT);
                     break;
                 case "up": case "w":
-                    newPlayerPosition = gameState.movePlayer(Direction.UP);
+                    gameState.movePlayer(Direction.UP);
                     break;
                 case "left": case "a":
-                    newPlayerPosition = gameState.movePlayer(Direction.LEFT);
+                    gameState.movePlayer(Direction.LEFT);
                     break;
                 case "down": case "s":
-                    newPlayerPosition = gameState.movePlayer(Direction.DOWN);
+                    gameState.movePlayer(Direction.DOWN);
                     break;
                 default:
                     System.out.println("Wrong command. Accepted commands are " +
                             "'up', 'left', 'down', 'right' or 'w', 'a', 's', 'd'. You can also exit with 'exit'.\n");
             }
-            System.out.println(gameBoard.toString(newPlayerPosition));
+            System.out.println(gameBoard.toString());
 
             if (gameBoardVisited.contains(gameBoard.hashCode())) {
                 System.out.println("You've already visited this state! No need to continue down this path again...\n");

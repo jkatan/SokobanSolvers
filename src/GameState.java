@@ -2,7 +2,6 @@ import java.awt.Point;
 
 public class GameState {
     private final GameBoard gameBoard;
-    private Point playerPosition;
     private boolean stuckBox;
 
     public GameState(GameBoard gameBoard) {
@@ -11,20 +10,20 @@ public class GameState {
     }
 
     public Point movePlayer(Direction moveDirection) {
-        Point targetPosition = getTargetPositionFromDirection(moveDirection, playerPosition);
+        Point targetPosition = getTargetPositionFromDirection(moveDirection, gameBoard.getPlayerPosition());
         System.out.println(targetPosition);
         Tile targetTile = gameBoard.getGameBoard().get(targetPosition.x).get(targetPosition.y);
         System.out.println(targetTile);
         switch (targetTile) {
             case FLOOR:
-                playerPosition = targetPosition;
+                gameBoard.setPlayerPosition(targetPosition);
                 break;
             case WALL:
                 //can't move
                 break;
             case BOX:
                 if (canMoveBox(targetPosition, moveDirection)) {
-                    playerPosition = targetPosition;
+                    gameBoard.setPlayerPosition(targetPosition);
                     moveBox(targetPosition, moveDirection);
                 } else {
                     System.out.println("Can't move box");
@@ -33,7 +32,7 @@ public class GameState {
 
         System.out.println(gameBoard.getCurrentTargetCellsCompleted());
 
-        return playerPosition;
+        return gameBoard.getPlayerPosition();
     }
 
     public boolean isGameWon() {

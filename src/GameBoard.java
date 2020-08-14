@@ -49,6 +49,10 @@ public class GameBoard {
         return playerPosition;
     }
 
+    public void setPlayerPosition(Point playerPosition) {
+        this.playerPosition = playerPosition;
+    }
+
     public int getCurrentTargetCellsCompleted() {
         return currentTargetCellsCompleted;
     }
@@ -57,7 +61,7 @@ public class GameBoard {
         this.currentTargetCellsCompleted = currentTargetCellsCompleted;
     }
 
-    public String toString(Point playerPosition) {
+    public String toString() {
         StringBuilder boardToString = new StringBuilder();
         int row = 0;
         int col = 0;
