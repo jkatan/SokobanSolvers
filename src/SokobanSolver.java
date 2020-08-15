@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Scanner;
 
 public class SokobanSolver {
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -8,17 +10,26 @@ public class SokobanSolver {
 
         String methodType = args[1];
         UninformedSearchSolver searchSolver;
-        if (methodType.equals("bfs")) {
-            searchSolver = new BFSSolver();
-        } else if (methodType.equals("dfs")) {
-            searchSolver = new DFSSolver();
-        } else {
-            System.out.println("Invalid argument, enter [bfs] or [dfs] to select a valid search algorithm");
-            return;
+        switch (methodType) {
+            case "bfs":
+                searchSolver = new BFSSolver();
+                searchSolver.solve(initialState);
+                break;
+            case "dfs":
+                searchSolver = new DFSSolver();
+                searchSolver.solve(initialState);
+                break;
+            case "interactive":
+                startInteractiveMode(gameBoard);
+                break;
+            default:
+                System.out.println("Invalid argument, enter [bfs], [dfs] or [interactive]");
+                break;
         }
-        searchSolver.solve(initialState);
+    }
 
-        /*HashSet<Integer> gameBoardVisited = new HashSet<>();
+    private static void startInteractiveMode(GameBoard gameBoard) {
+        HashSet<Integer> gameBoardVisited = new HashSet<>();
         System.out.println(gameBoard.toString());
 
         Scanner inputReader = new Scanner(System.in);
@@ -58,6 +69,6 @@ public class SokobanSolver {
                 return;
             }
             gameBoardVisited.add(gameBoard.hashCode());
-        }*/
+        }
     }
 }
