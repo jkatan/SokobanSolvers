@@ -9,34 +9,32 @@ public class GameState {
         stuckBox = false;
     }
 
-    public Point movePlayer(Direction moveDirection) {
+    public void movePlayer(Direction moveDirection) {
         Point targetPosition = getTargetPositionFromDirection(moveDirection, gameBoard.getPlayerPosition());
-        System.out.println(targetPosition);
+        System.out.println("Target position: " + targetPosition);
         Tile targetTile = gameBoard.getGameBoard().get(targetPosition.x).get(targetPosition.y);
-        System.out.println(targetTile);
+        System.out.println("In the space there's a " + targetTile);
         switch (targetTile) {
             case FLOOR:
                 gameBoard.setPlayerPosition(targetPosition);
                 break;
             case WALL:
-                //can't move
+                // Can't move
                 break;
             case BOX:
                 if (canMoveBox(targetPosition, moveDirection)) {
-                    gameBoard.setPlayerPosition(targetPosition);
                     moveBox(targetPosition, moveDirection);
+                    gameBoard.setPlayerPosition(targetPosition);
                 } else {
                     System.out.println("Can't move box");
                 }
         }
-
-        System.out.println(gameBoard.getCurrentTargetCellsCompleted());
-
-        return gameBoard.getPlayerPosition();
+//        System.out.println("Target cells filled: " + gameBoard.getCurrentTargetCellsCompleted());
     }
 
     public boolean isGameWon() {
-        return gameBoard.getCurrentTargetCellsCompleted() == gameBoard.getTargetCellsPositions().size();
+        // todo: optimize
+        return gameBoard.getBoxCellsPositions().equals(gameBoard.getTargetCellsPositions());
     }
 
     public boolean isGameStuck() {
@@ -72,18 +70,21 @@ public class GameState {
     }
 
     private void moveBox(Point boxPosition, Direction moveDirection) {
-        int currentTargetCellsCompleted = gameBoard.getCurrentTargetCellsCompleted();
+//        int currentTargetCellsCompleted = gameBoard.getCurrentTargetCellsCompleted();
         Point targetPosition = getTargetPositionFromDirection(moveDirection, boxPosition);
         gameBoard.getGameBoard().get(boxPosition.x).set(boxPosition.y, Tile.FLOOR);
         gameBoard.getGameBoard().get(targetPosition.x).set(targetPosition.y, Tile.BOX);
 
-        if (gameBoard.getTargetCellsPositions().contains(boxPosition)) {
-            gameBoard.setCurrentTargetCellsCompleted(currentTargetCellsCompleted - 1);
-        }
-
-        if (gameBoard.getTargetCellsPositions().contains(targetPosition)) {
-            gameBoard.setCurrentTargetCellsCompleted(currentTargetCellsCompleted + 1);
-        } else if (isBoxBlocked(targetPosition)) {
+//        if (gameBoard.getTargetCellsPositions().contains(boxPosition)) {
+//            gameBoard.setCurrentTargetCellsCompleted(currentTargetCellsCompleted - 1);
+//        }
+//
+//        if (gameBoard.getTargetCellsPositions().contains(targetPosition)) {
+//            gameBoard.setCurrentTargetCellsCompleted(currentTargetCellsCompleted + 1);
+//        } else if (isBoxBlocked(targetPosition)) {
+//            stuckBox = true;
+//        }
+        if (isBoxBlocked(targetPosition)) {
             stuckBox = true;
         }
     }
@@ -92,6 +93,7 @@ public class GameState {
         return !((gameBoard.getGameBoard().get(boxPosition.x).get(boxPosition.y + 1) == Tile.FLOOR
                 && gameBoard.getGameBoard().get(boxPosition.x).get(boxPosition.y - 1) == Tile.FLOOR)
                 || ((gameBoard.getGameBoard().get(boxPosition.x + 1).get(boxPosition.y) == Tile.FLOOR)
-                && gameBoard.getGameBoard().get(boxPosition.x - 1).get(boxPosition.y) == Tile.FLOOR));
+                && gameBoard.getGameBoard().get(boxPosition.x - 1).get(boxPosition.y) == Tile.FLOOR))
+                && (gameBoard.getGameBoard().get(boxPosition.x).get(boxPosition.y) == Tile.TARGET);
     }
 }
