@@ -1,4 +1,5 @@
 import java.awt.Point;
+import java.util.Objects;
 
 public class GameState {
     private final GameBoard gameBoard;
@@ -9,11 +10,14 @@ public class GameState {
         stuckBox = false;
     }
 
+    public GameState(GameState otherGameState) {
+        this.gameBoard = new GameBoard(otherGameState.gameBoard);
+        this.stuckBox = otherGameState.stuckBox;
+    }
+
     public Point movePlayer(Direction moveDirection) {
         Point targetPosition = getTargetPositionFromDirection(moveDirection, gameBoard.getPlayerPosition());
-        System.out.println(targetPosition);
         Tile targetTile = gameBoard.getGameBoard().get(targetPosition.x).get(targetPosition.y);
-        System.out.println(targetTile);
         switch (targetTile) {
             case FLOOR:
                 gameBoard.setPlayerPosition(targetPosition);
@@ -25,12 +29,8 @@ public class GameState {
                 if (canMoveBox(targetPosition, moveDirection)) {
                     gameBoard.setPlayerPosition(targetPosition);
                     moveBox(targetPosition, moveDirection);
-                } else {
-                    System.out.println("Can't move box");
                 }
         }
-
-        System.out.println(gameBoard.getCurrentTargetCellsCompleted());
 
         return gameBoard.getPlayerPosition();
     }
@@ -41,6 +41,19 @@ public class GameState {
 
     public boolean isGameStuck() {
         return stuckBox;
+    }
+
+    public Point getPlayerPosition() {
+        return gameBoard.getPlayerPosition();
+    }
+
+     @Override
+    public String toString() {
+        return gameBoard.toString();
+    }
+
+    public GameBoard getGameBoard() {
+        return gameBoard;
     }
 
     private Point getTargetPositionFromDirection(Direction moveDirection, Point currentPosition) {
@@ -72,17 +85,16 @@ public class GameState {
     }
 
     private void moveBox(Point boxPosition, Direction moveDirection) {
-        int currentTargetCellsCompleted = gameBoard.getCurrentTargetCellsCompleted();
         Point targetPosition = getTargetPositionFromDirection(moveDirection, boxPosition);
         gameBoard.getGameBoard().get(boxPosition.x).set(boxPosition.y, Tile.FLOOR);
         gameBoard.getGameBoard().get(targetPosition.x).set(targetPosition.y, Tile.BOX);
 
         if (gameBoard.getTargetCellsPositions().contains(boxPosition)) {
-            gameBoard.setCurrentTargetCellsCompleted(currentTargetCellsCompleted - 1);
+            gameBoard.setCurrentTargetCellsCompleted(gameBoard.getCurrentTargetCellsCompleted() - 1);
         }
 
         if (gameBoard.getTargetCellsPositions().contains(targetPosition)) {
-            gameBoard.setCurrentTargetCellsCompleted(currentTargetCellsCompleted + 1);
+            gameBoard.setCurrentTargetCellsCompleted(gameBoard.getCurrentTargetCellsCompleted() + 1);
         } else if (isBoxBlocked(targetPosition)) {
             stuckBox = true;
         }

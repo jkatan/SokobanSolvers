@@ -1,14 +1,24 @@
-import java.awt.*;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Scanner;
 
 public class SokobanSolver {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         String filePath = args[0];
         GameBoard gameBoard = new GameBoard(filePath);
-        HashSet<Integer> gameBoardVisited = new HashSet<>();
+        GameState initialState = new GameState(gameBoard);
+
+        String methodType = args[1];
+        UninformedSearchSolver searchSolver;
+        if (methodType.equals("bfs")) {
+            searchSolver = new BFSSolver();
+        } else if (methodType.equals("dfs")) {
+            searchSolver = new DFSSolver();
+        } else {
+            System.out.println("Invalid argument, enter [bfs] or [dfs] to select a valid search algorithm");
+            return;
+        }
+        searchSolver.solve(initialState);
+
+        /*HashSet<Integer> gameBoardVisited = new HashSet<>();
         System.out.println(gameBoard.toString());
 
         Scanner inputReader = new Scanner(System.in);
@@ -48,6 +58,6 @@ public class SokobanSolver {
                 return;
             }
             gameBoardVisited.add(gameBoard.hashCode());
-        }
+        }*/
     }
 }
