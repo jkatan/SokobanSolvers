@@ -3,22 +3,25 @@ import java.util.List;
 
 public class Node {
     private final Node parent;
-    private List<Node> children;
+    private final List<Node> children;
     private final GameState gameState;
     private final Direction actionTaken;
+    private final int depth;
 
-    public Node(Node parent, GameState gameState, Direction newAction) {
+    public Node(Node parent, GameState gameState, Direction newAction, int depth) {
         this.parent = parent;
         this.children = new ArrayList<>();
         this.gameState = gameState;
         this.actionTaken = newAction;
+        this.depth = depth;
     }
 
     public Node(GameState gameState) {
-        this.actionTaken = Direction.NONE;
+        actionTaken = Direction.NONE;
         children = new ArrayList<>();
         this.gameState = gameState;
         parent = null;
+        depth = 0;
     }
 
     public void addChild(Node child) {
@@ -40,4 +43,6 @@ public class Node {
     public Direction getActionTaken() {
         return actionTaken;
     }
+
+    public int getDepth() { return depth; }
 }
