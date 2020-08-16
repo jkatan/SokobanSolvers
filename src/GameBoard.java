@@ -7,7 +7,7 @@ public class GameBoard {
     // actual map being played:
     private final List<List<Tile>> gameBoard;
     // where the target tiles are:
-    private Set<Point> targetCellsPositions;
+    private final Set<Point> targetCellsPositions;
     // actual amount of cells filled
     private int currentTargetCellsCompleted;
     // the player's position on the map:
@@ -33,8 +33,14 @@ public class GameBoard {
         }
     }
 
-    public GameBoard(List<List<Tile>> gameBoard) {
-        this.gameBoard = gameBoard;
+    public GameBoard(GameBoard gameBoard) {
+        targetCellsPositions = gameBoard.targetCellsPositions;
+        currentTargetCellsCompleted = gameBoard.currentTargetCellsCompleted;
+        playerPosition = new Point(gameBoard.playerPosition);
+        this.gameBoard = new ArrayList<>();
+        for (List<Tile> row : gameBoard.gameBoard) {
+            this.gameBoard.add(new ArrayList<>(row));
+        }
     }
 
     public List<List<Tile>> getGameBoard() {

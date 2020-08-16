@@ -1,13 +1,34 @@
-import java.awt.*;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
 
 public class SokobanSolver {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         String filePath = args[0];
         GameBoard gameBoard = new GameBoard(filePath);
+        GameState initialState = new GameState(gameBoard);
+
+        String methodType = args[1];
+        UninformedSearchSolver searchSolver;
+        switch (methodType) {
+            case "bfs":
+                searchSolver = new BFSSolver();
+                searchSolver.solve(initialState);
+                break;
+            case "dfs":
+                searchSolver = new DFSSolver();
+                searchSolver.solve(initialState);
+                break;
+            case "interactive":
+                startInteractiveMode(gameBoard);
+                break;
+            default:
+                System.out.println("Invalid argument, enter [bfs], [dfs] or [interactive]");
+                break;
+        }
+    }
+
+    private static void startInteractiveMode(GameBoard gameBoard) {
         HashSet<Integer> gameBoardVisited = new HashSet<>();
         System.out.println(gameBoard.toString());
 
