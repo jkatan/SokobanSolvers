@@ -1,3 +1,7 @@
+package solvers.uninformed;
+
+import states.Node;
+
 import java.util.LinkedList;
 
 public class BFSSolver extends UninformedSearchSolver {

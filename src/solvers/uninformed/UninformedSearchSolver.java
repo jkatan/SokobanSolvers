@@ -1,18 +1,16 @@
+package solvers.uninformed;
+
 import java.util.*;
 
-public abstract class UninformedSearchSolver {
+import solvers.SearchSolver;
+import states.Direction;
+import states.GameState;
+import states.Node;
 
-    protected Collection<Node> frontierNodes;
-    private int expandedNodesAmount;
-    Map<Integer, Integer> visitedStatesDepth;
+public abstract class UninformedSearchSolver extends SearchSolver {
+    public static final int IGNORE_DEPTH = -1;
 
-    protected UninformedSearchSolver() {
-        frontierNodes = new ArrayList<>();
-        expandedNodesAmount = 0;
-        visitedStatesDepth = new HashMap<>();
-    }
-
-    public void solve(GameState initialState, int maxDepth) throws InterruptedException {
+    public void solve(GameState initialState, int maxDepth) {
         long startTime = System.currentTimeMillis();
         Node solutionNode = startSearch(initialState, maxDepth);
         long endTime = System.currentTimeMillis();
@@ -24,7 +22,7 @@ public abstract class UninformedSearchSolver {
         }
     }
 
-    public Node startSearch(GameState initialState, int maxDepth) throws InterruptedException {
+    public Node startSearch(GameState initialState, int maxDepth) {
         Node root = new Node(initialState);
         addFrontierNode(root);
         while(!frontierNodes.isEmpty()) {
@@ -32,7 +30,7 @@ public abstract class UninformedSearchSolver {
             int currentDepth = currentNode.getDepth();
             if(currentNode.getState().isGameWon()) {
                 return currentNode;
-            } else if (maxDepth == -1 || currentDepth < maxDepth){
+            } else if (maxDepth == IGNORE_DEPTH || currentDepth < maxDepth){
                 int successorDepth = currentDepth + 1;
                 addNodeSuccessor(currentNode, Direction.RIGHT, successorDepth);
                 addNodeSuccessor(currentNode, Direction.LEFT, successorDepth);
@@ -68,7 +66,7 @@ public abstract class UninformedSearchSolver {
         Collections.reverse(actionsToWin);
         System.out.println("[SOLUTION] Actions taken to win:");
         System.out.println(actionsToWin);
-        System.out.println("Maximum depth used: " + maxDepth);
+        System.out.println("Maximum depth used: " + (maxDepth == IGNORE_DEPTH ? "none specified" : maxDepth));
         System.out.println("Solution depth: " + (actionsToWin.size() - 1));
         System.out.println("Expanded nodes: " + expandedNodesAmount);
         System.out.println("Frontier nodes: " + frontierNodes.size());

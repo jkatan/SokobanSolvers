@@ -1,31 +1,51 @@
+import board.GameBoard;
+import solvers.SearchSolver;
+import solvers.informed.AStarSolver;
+import solvers.informed.GGSSolver;
+import solvers.informed.IDAStarSolver;
+import solvers.uninformed.BFSSolver;
+import solvers.uninformed.DFSSolver;
+import solvers.uninformed.IDDFSSolver;
+import states.Direction;
+import states.GameState;
+
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Scanner;
 
 public class SokobanSolver {
+    public static final int IGNORE_DEPTH = -1;
+
     public static void main(String[] args) throws IOException, InterruptedException {
         String filePath = args[0];
         GameBoard gameBoard = new GameBoard(filePath);
         GameState initialState = new GameState(gameBoard);
 
         String methodType = args[1];
-        UninformedSearchSolver searchSolver;
-        int maxDepth = -1;
+        SearchSolver searchSolver;
+        int maxDepth = args.length > 2 ? Integer.parseInt(args[2]) : IGNORE_DEPTH;
         switch (methodType) {
             case "bfs":
                 searchSolver = new BFSSolver();
-                maxDepth = Integer.parseInt(args[2]);
                 searchSolver.solve(initialState, maxDepth);
                 break;
             case "dfs":
-                maxDepth = Integer.parseInt(args[2]);
-                searchSolver = new DFSSolver(maxDepth != -1);
+                searchSolver = new DFSSolver(maxDepth != IGNORE_DEPTH);
                 searchSolver.solve(initialState, maxDepth);
                 break;
             case "iddfs":
                 searchSolver = new IDDFSSolver();
-                int iterations = Integer.parseInt(args[2]);
-                ((IDDFSSolver)searchSolver).iddfsSolver(initialState, iterations);
+                ((IDDFSSolver) searchSolver).iddfsSolver(initialState, maxDepth);
+                break;
+            case "astar":
+//                searchSolver = new AStarSolver();   todo: implement
+                break;
+            case "ggs":
+                searchSolver = new GGSSolver();
+                searchSolver.solve(initialState, maxDepth); // todo: implement
+                break;
+            case "idastar":
+//                searchSolver = new IDAStarSolver();   todo: implement
                 break;
             case "interactive":
                 startInteractiveMode(gameBoard);
