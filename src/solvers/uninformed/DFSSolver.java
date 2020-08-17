@@ -5,7 +5,7 @@ import states.GameState;
 
 import java.util.Stack;
 
-public class DFSSolver extends UninformedSearchSolver{
+public class DFSSolver extends UninformedSearchSolver {
     private final Boolean useDepthLimitedSearch;
 
     public DFSSolver(Boolean useDepthLimitedSearch) {

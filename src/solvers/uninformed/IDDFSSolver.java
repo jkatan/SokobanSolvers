@@ -12,7 +12,7 @@ public class IDDFSSolver extends DFSSolver {
     public void iddfsSolver(GameState initialState, int iterations) throws InterruptedException {
         Node solution;
         long startTime = System.currentTimeMillis();
-        for (int i=1; i<iterations; i++) {
+        for (int i = 1; i <= iterations; i++) {
             System.out.println("Iteration number " + i);
             solution = startSearch(initialState, i);
             if (solution != null) {
