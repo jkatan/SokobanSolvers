@@ -4,7 +4,7 @@ public abstract class UninformedSearchSolver {
 
     protected Collection<Node> frontierNodes;
     private int expandedNodesAmount;
-    Map<GameBoard, Integer> visitedStatesDepth;
+    Map<Integer, Integer> visitedStatesDepth;
 
     protected UninformedSearchSolver() {
         frontierNodes = new ArrayList<>();
@@ -51,7 +51,7 @@ public abstract class UninformedSearchSolver {
             Node newSuccessor = new Node(currentNode, newState, newAction, successorDepth);
             currentNode.addChild(newSuccessor);
             addFrontierNode(newSuccessor);
-            visitedStatesDepth.put(newState.getGameBoard(), successorDepth);
+            visitedStatesDepth.put(newState.getGameBoard().hashCode(), successorDepth);
             expandedNodesAmount += 1;
         }
     }
@@ -81,7 +81,7 @@ public abstract class UninformedSearchSolver {
     }
 
     protected Boolean validateSuccessorExpansion(GameState currentState, GameState newState, int successorDepth) {
-        return !visitedStatesDepth.containsKey(newState.getGameBoard()) && !newState.isGameStuck()
+        return !visitedStatesDepth.containsKey(newState.getGameBoard().hashCode()) && !newState.isGameStuck()
                 && !newState.getPlayerPosition().equals(currentState.getPlayerPosition());
     }
 

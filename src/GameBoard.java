@@ -131,6 +131,20 @@ public class GameBoard {
 
     @Override
     public int hashCode() {
-        return Objects.hash(gameBoard, targetCellsPositions, currentTargetCellsCompleted, playerPosition);
+        List<Point> boxPositions = new ArrayList<>();
+        int rows = 0;
+        int cols = 0;
+        for (List<Tile> row : gameBoard) {
+            for (Tile tile : row) {
+                if (tile == Tile.BOX) {
+                    boxPositions.add(new Point(rows, cols));
+                }
+                cols += 1;
+            }
+            cols = 0;
+            rows += 1;
+        }
+
+        return Objects.hash(gameBoard, targetCellsPositions, currentTargetCellsCompleted, playerPosition, boxPositions);
     }
 }

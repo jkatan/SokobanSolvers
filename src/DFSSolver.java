@@ -25,7 +25,7 @@ public class DFSSolver extends UninformedSearchSolver{
         }
 
         return !newState.isGameStuck() && !newState.getPlayerPosition().equals(currentState.getPlayerPosition())
-                && !(visitedStatesDepth.containsKey(newState.getGameBoard())
-                && visitedStatesDepth.get(newState.getGameBoard()) < successorDepth);
+                && !(visitedStatesDepth.containsKey(newState.getGameBoard().hashCode())
+                && visitedStatesDepth.get(newState.getGameBoard().hashCode()) < successorDepth);
     }
 }
