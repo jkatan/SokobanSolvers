@@ -1,3 +1,11 @@
+import board.GameBoard;
+import solvers.uninformed.BFSSolver;
+import solvers.uninformed.DFSSolver;
+import solvers.uninformed.IDDFSSolver;
+import solvers.uninformed.UninformedSearchSolver;
+import states.Direction;
+import states.GameState;
+
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Scanner;

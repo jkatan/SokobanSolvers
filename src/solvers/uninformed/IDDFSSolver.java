@@ -1,3 +1,8 @@
+package solvers.uninformed;
+
+import states.Node;
+import states.GameState;
+
 public class IDDFSSolver extends DFSSolver {
 
     public IDDFSSolver() {

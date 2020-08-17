@@ -1,5 +1,9 @@
+package states;
+
+import board.GameBoard;
+import board.Tile;
+
 import java.awt.Point;
-import java.util.Objects;
 
 public class GameState {
     private final GameBoard gameBoard;

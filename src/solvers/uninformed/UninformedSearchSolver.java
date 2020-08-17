@@ -1,4 +1,11 @@
+package solvers.uninformed;
+
 import java.util.*;
+
+import board.GameBoard;
+import states.Direction;
+import states.GameState;
+import states.Node;
 
 public abstract class UninformedSearchSolver {
 

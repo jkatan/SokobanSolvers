@@ -1,3 +1,8 @@
+package solvers.uninformed;
+
+import states.Node;
+import states.GameState;
+
 import java.util.Stack;
 
 public class DFSSolver extends UninformedSearchSolver{
