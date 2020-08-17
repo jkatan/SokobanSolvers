@@ -120,19 +120,7 @@ public class GameBoard {
         return Tile.FLOOR;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        GameBoard gameBoard1 = (GameBoard) o;
-        return currentTargetCellsCompleted == gameBoard1.currentTargetCellsCompleted &&
-                gameBoard.equals(gameBoard1.gameBoard) &&
-                targetCellsPositions.equals(gameBoard1.targetCellsPositions) &&
-                playerPosition.equals(gameBoard1.playerPosition);
-    }
-
-    @Override
-    public int hashCode() {
+    public List<Point> getBoxPositions() {
         List<Point> boxPositions = new ArrayList<>();
         int rows = 0;
         int cols = 0;
@@ -147,6 +135,22 @@ public class GameBoard {
             rows += 1;
         }
 
-        return Objects.hash(gameBoard, targetCellsPositions, currentTargetCellsCompleted, playerPosition, boxPositions);
+        return boxPositions;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GameBoard gameBoard1 = (GameBoard) o;
+        return currentTargetCellsCompleted == gameBoard1.currentTargetCellsCompleted &&
+                gameBoard.equals(gameBoard1.gameBoard) &&
+                targetCellsPositions.equals(gameBoard1.targetCellsPositions) &&
+                playerPosition.equals(gameBoard1.playerPosition);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(gameBoard, targetCellsPositions, currentTargetCellsCompleted, playerPosition, getBoxPositions());
     }
 }

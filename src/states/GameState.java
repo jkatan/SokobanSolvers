@@ -19,7 +19,7 @@ public class GameState {
         this.stuckBox = otherGameState.stuckBox;
     }
 
-    public Point movePlayer(Direction moveDirection) {
+    public void movePlayer(Direction moveDirection) {
         Point targetPosition = getTargetPositionFromDirection(moveDirection, gameBoard.getPlayerPosition());
         Tile targetTile = gameBoard.getGameBoard().get(targetPosition.x).get(targetPosition.y);
         switch (targetTile) {
@@ -36,7 +36,6 @@ public class GameState {
                 }
         }
 
-        return gameBoard.getPlayerPosition();
     }
 
     public boolean isGameWon() {

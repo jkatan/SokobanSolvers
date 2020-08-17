@@ -3,6 +3,7 @@ import solvers.SearchSolver;
 import solvers.informed.AStarSolver;
 import solvers.informed.GGSSolver;
 import solvers.informed.IDAStarSolver;
+import solvers.informed.ManhattanDistanceHeuristic;
 import solvers.uninformed.BFSSolver;
 import solvers.uninformed.DFSSolver;
 import solvers.uninformed.IDDFSSolver;
@@ -19,6 +20,7 @@ public class SokobanSolver {
     public static void main(String[] args) throws IOException, InterruptedException {
         String filePath = args[0];
         GameBoard gameBoard = new GameBoard(filePath);
+
         GameState initialState = new GameState(gameBoard);
 
         String methodType = args[1];
@@ -38,14 +40,16 @@ public class SokobanSolver {
                 ((IDDFSSolver) searchSolver).iddfsSolver(initialState, maxDepth);
                 break;
             case "astar":
-//                searchSolver = new AStarSolver();   todo: implement
+                searchSolver = new AStarSolver(new ManhattanDistanceHeuristic());
+                searchSolver.solve(initialState, maxDepth);
                 break;
             case "ggs":
-                searchSolver = new GGSSolver();
-                searchSolver.solve(initialState, maxDepth); // todo: implement
+                searchSolver = new GGSSolver(new ManhattanDistanceHeuristic());
+                searchSolver.solve(initialState, maxDepth);
                 break;
             case "idastar":
-//                searchSolver = new IDAStarSolver();   todo: implement
+                searchSolver = new IDAStarSolver(new ManhattanDistanceHeuristic());
+                searchSolver.solve(initialState, maxDepth);
                 break;
             case "interactive":
                 startInteractiveMode(gameBoard);

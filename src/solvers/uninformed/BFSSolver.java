@@ -1,10 +1,11 @@
 package solvers.uninformed;
 
+import solvers.SearchSolver;
 import states.Node;
 
 import java.util.LinkedList;
 
-public class BFSSolver extends UninformedSearchSolver {
+public class BFSSolver extends SearchSolver {
 
     public BFSSolver() {
         frontierNodes = new LinkedList<>();
