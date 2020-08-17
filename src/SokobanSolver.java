@@ -10,20 +10,28 @@ public class SokobanSolver {
 
         String methodType = args[1];
         UninformedSearchSolver searchSolver;
+        int maxDepth = -1;
         switch (methodType) {
             case "bfs":
                 searchSolver = new BFSSolver();
-                searchSolver.solve(initialState);
+                maxDepth = Integer.parseInt(args[2]);
+                searchSolver.solve(initialState, maxDepth);
                 break;
             case "dfs":
-                searchSolver = new DFSSolver();
-                searchSolver.solve(initialState);
+                maxDepth = Integer.parseInt(args[2]);
+                searchSolver = new DFSSolver(maxDepth != -1);
+                searchSolver.solve(initialState, maxDepth);
+                break;
+            case "iddfs":
+                searchSolver = new IDDFSSolver();
+                int iterations = Integer.parseInt(args[2]);
+                ((IDDFSSolver)searchSolver).iddfsSolver(initialState, iterations);
                 break;
             case "interactive":
                 startInteractiveMode(gameBoard);
                 break;
             default:
-                System.out.println("Invalid argument, enter [bfs], [dfs] or [interactive]");
+                System.out.println("Invalid argument, enter [bfs] [maxDepth], [dfs] [maxDepth], [iddfs] [iterations] or [interactive]");
                 break;
         }
     }

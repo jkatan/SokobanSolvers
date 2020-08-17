@@ -1,9 +1,11 @@
 import java.util.Stack;
 
 public class DFSSolver extends UninformedSearchSolver{
+    private final Boolean useDepthLimitedSearch;
 
-    public DFSSolver() {
+    public DFSSolver(Boolean useDepthLimitedSearch) {
         frontierNodes = new Stack<>();
+        this.useDepthLimitedSearch = useDepthLimitedSearch;
     }
 
     @Override
@@ -14,5 +16,16 @@ public class DFSSolver extends UninformedSearchSolver{
     @Override
     protected Node extractFrontierNode() {
         return ((Stack<Node>)frontierNodes).pop();
+    }
+
+    @Override
+    protected Boolean validateSuccessorExpansion(GameState currentState, GameState newState, int successorDepth) {
+        if (!useDepthLimitedSearch) {
+            return super.validateSuccessorExpansion(currentState, newState, successorDepth);
+        }
+
+        return !newState.isGameStuck() && !newState.getPlayerPosition().equals(currentState.getPlayerPosition())
+                && !(visitedStatesDepth.containsKey(newState.getGameBoard().hashCode())
+                && visitedStatesDepth.get(newState.getGameBoard().hashCode()) < successorDepth);
     }
 }
