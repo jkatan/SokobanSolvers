@@ -1,11 +1,12 @@
 package solvers.uninformed;
 
+import solvers.SearchSolver;
 import states.Node;
 import states.GameState;
 
 import java.util.Stack;
 
-public class DFSSolver extends UninformedSearchSolver {
+public class DFSSolver extends SearchSolver {
     private final Boolean useDepthLimitedSearch;
 
     public DFSSolver(Boolean useDepthLimitedSearch) {
@@ -30,7 +31,7 @@ public class DFSSolver extends UninformedSearchSolver {
         }
 
         return !newState.isGameStuck() && !newState.getPlayerPosition().equals(currentState.getPlayerPosition())
-                && !(visitedStatesDepth.containsKey(newState.getGameBoard().hashCode())
-                && visitedStatesDepth.get(newState.getGameBoard().hashCode()) < successorDepth);
+                && !(visitedStatesDepth.containsKey(newState.getGameBoard())
+                && visitedStatesDepth.get(newState.getGameBoard()) < successorDepth);
     }
 }
