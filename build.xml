@@ -1,0 +1,22 @@
+<project>
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="src" destdir="build/classes"/>
+    </target>
+
+    <target name="jar">
+        <jar destfile="SokobanSolver.jar" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="SokobanSolver"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run">
+        <java jar="SokobanSolver.jar" fork="true"/>
+    </target>
+</project>
