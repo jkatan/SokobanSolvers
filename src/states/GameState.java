@@ -103,7 +103,7 @@ public class GameState {
         }
     }
 
-    private boolean isBoxBlocked(Point boxPosition) {
+    public boolean isBoxBlocked(Point boxPosition) {
         return !((gameBoard.getGameBoard().get(boxPosition.x).get(boxPosition.y + 1) == Tile.FLOOR
                 && gameBoard.getGameBoard().get(boxPosition.x).get(boxPosition.y - 1) == Tile.FLOOR)
                 || ((gameBoard.getGameBoard().get(boxPosition.x + 1).get(boxPosition.y) == Tile.FLOOR)

@@ -1,5 +1,6 @@
 package solvers.informed;
 
+import solvers.informed.heuristics.Heuristic;
 import states.Direction;
 import states.GameState;
 import states.Node;

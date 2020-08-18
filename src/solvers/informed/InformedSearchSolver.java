@@ -1,6 +1,7 @@
 package solvers.informed;
 
 import solvers.SearchSolver;
+import solvers.informed.heuristics.Heuristic;
 import states.Node;
 
 public abstract class InformedSearchSolver extends SearchSolver {

@@ -75,9 +75,9 @@ public class GameBoard {
         int col = 0;
         for (List<Tile> boardRow : gameBoard) {
             for (Tile tile : boardRow) {
+                Point tilePosition = new Point(row, col);
                 switch (tile) {
                     case FLOOR:
-                        Point tilePosition = new Point(row, col);
                         if (playerPosition.equals(tilePosition)) {
                             boardToString.append('@');
                         } else if (targetCellsPositions.contains(tilePosition)) {
@@ -90,7 +90,11 @@ public class GameBoard {
                         boardToString.append('#');
                         break;
                     case BOX:
-                        boardToString.append('$');
+                        if (targetCellsPositions.contains(tilePosition)) {
+                            boardToString.append('*');
+                        } else {
+                            boardToString.append('$');
+                        }
                         break;
                 }
                 col += 1;
@@ -110,6 +114,10 @@ public class GameBoard {
             case '.':
                 targetCellsPositions.add(new Point(row, col));
                 return Tile.FLOOR;
+            case '*':
+                targetCellsPositions.add(new Point(row, col));
+                currentTargetCellsCompleted += 1;
+                return Tile.BOX;
             case '$':
                 return Tile.BOX;
             case '@':
