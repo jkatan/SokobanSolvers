@@ -1,4 +1,4 @@
-package solvers.informed;
+package solvers.informed.heuristics;
 
 import board.GameBoard;
 import states.Node;

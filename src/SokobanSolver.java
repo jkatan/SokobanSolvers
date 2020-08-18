@@ -3,30 +3,32 @@ import solvers.SearchSolver;
 import solvers.informed.AStarSolver;
 import solvers.informed.GGSSolver;
 import solvers.informed.IDAStarSolver;
-import solvers.informed.ManhattanDistanceHeuristic;
+import solvers.informed.heuristics.ManhattanDistanceHeuristic;
 import solvers.uninformed.BFSSolver;
 import solvers.uninformed.DFSSolver;
 import solvers.uninformed.IDDFSSolver;
 import states.Direction;
 import states.GameState;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Scanner;
 
 public class SokobanSolver {
     public static final int IGNORE_DEPTH = -1;
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        String filePath = args[0];
-        GameBoard gameBoard = new GameBoard(filePath);
-
+        String sokobanConfigPath = "src/config.properties";
+        final Properties properties = new Properties();
+        properties.load(new FileInputStream(sokobanConfigPath));
+        GameBoard gameBoard = new GameBoard("src/board/resources/maps/" + properties.getProperty("map"));
         GameState initialState = new GameState(gameBoard);
 
-        String methodType = args[1];
         SearchSolver searchSolver;
-        int maxDepth = args.length > 2 ? Integer.parseInt(args[2]) : IGNORE_DEPTH;
-        switch (methodType) {
+        int maxDepth = Integer.parseInt(properties.getProperty("depth"));
+        switch (properties.getProperty("methodType")) {
             case "bfs":
                 searchSolver = new BFSSolver();
                 searchSolver.solve(initialState, maxDepth);

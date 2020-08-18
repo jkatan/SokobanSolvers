@@ -1,6 +1,6 @@
 package solvers.informed;
 
-import board.GameBoard;
+import solvers.informed.heuristics.Heuristic;
 import states.Node;
 
 import java.util.PriorityQueue;
