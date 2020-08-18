@@ -42,16 +42,5 @@ public class ManhattanDistanceHeuristic implements Heuristic {
 
     protected Boolean validateBoxPositionsCheck(List<Point> boxPositions, Point targetCellPosition, GameState state) {
         return true;
-        int currentBox = 0;
-        int currentDistance = 0;
-        Point currentBoxPosition;
-        for (Point targetCellPosition : gameBoard.getTargetCellsPositions()) {
-            currentBoxPosition = boxPositions.get(currentBox);
-            currentDistance += Math.abs(targetCellPosition.x - currentBoxPosition.x)
-                    + Math.abs(targetCellPosition.y - currentBoxPosition.y);
-            currentBox += 1;
-        }
-
-        return currentDistance;
     }
 }
