@@ -31,6 +31,7 @@ public class SokobanSolver {
 
         SearchSolver searchSolver;
         int maxDepth = Integer.parseInt(properties.getProperty("depth"));
+        Heuristic heuristicToUse = getHeuristicFromProperty(properties.getProperty("heuristic"));
         switch (properties.getProperty("methodType")) {
             case "bfs":
                 searchSolver = new BFSSolver();
@@ -45,15 +46,15 @@ public class SokobanSolver {
                 ((IDDFSSolver) searchSolver).iddfsSolver(initialState, maxDepth);
                 break;
             case "astar":
-                searchSolver = new AStarSolver(new LinearConflictHeuristic());
+                searchSolver = new AStarSolver(heuristicToUse);
                 searchSolver.solve(initialState, maxDepth);
                 break;
             case "ggs":
-                searchSolver = new GGSSolver(new LinearConflictHeuristic());
+                searchSolver = new GGSSolver(heuristicToUse);
                 searchSolver.solve(initialState, maxDepth);
                 break;
             case "idastar":
-                searchSolver = new IDAStarSolver(new LinearConflictHeuristic());
+                searchSolver = new IDAStarSolver(heuristicToUse);
                 searchSolver.solve(initialState, maxDepth);
                 break;
             case "interactive":
@@ -63,6 +64,22 @@ public class SokobanSolver {
                 System.out.println("Invalid argument, enter [bfs] [maxDepth], [dfs] [maxDepth], [iddfs] [iterations] or [interactive]");
                 break;
         }
+    }
+
+    private static Heuristic getHeuristicFromProperty(String property) {
+        Heuristic chosenHeuristic = null;
+        switch (property) {
+            case "manhattanDistance" :
+                chosenHeuristic = new ManhattanDistanceHeuristic();
+                break;
+            case "linearConflicts" :
+                chosenHeuristic = new LinearConflictHeuristic();
+                break;
+            case "frozenBoxes" :
+                chosenHeuristic = new FrozenBoxesHeuristic();
+                break;
+        }
+        return chosenHeuristic;
     }
 
     private static void startInteractiveMode(GameBoard gameBoard) {
