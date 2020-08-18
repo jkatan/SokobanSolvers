@@ -38,13 +38,22 @@ public class AStarSolver extends InformedSearchSolver {
         int heuristicValue = heuristic.apply(node);
         node.setStateHeuristicValue(heuristicValue);
     }
-    //TODO
-    //Calcula el costo de moverse de un nodo a otro. Actualmente en 1. Una vez que tengamos implementados los
-    //algoritmos con este calculo de costo y heuristica naive, vemos como podemos mejorarlos. Pero al menos
-    //tener algo que funciona primero.
+
     protected int calculateCost(Node from, Node to) {
         if (from == null) {
             return 0;
+        }
+
+        /*El costo de mover una caja fuera de un target cell es al menos 2, porque luego va a haber que mover esa misma caja o alguna otra
+         a ese target*/
+        if (to.getState().getGameBoard().getCurrentTargetCellsCompleted() < from.getState().getGameBoard().getCurrentTargetCellsCompleted()) {
+            return 2;
+        }
+
+        /*Actualmente estamos validando de no movernos a un estado stuck, pero en caso de que no lo validemos, este costo nos asegura de que la solucion
+         no vaya hacia estos nodos atascados con costo alto*/
+        if (to.getState().isGameStuck()) {
+            return 100000;
         }
 
         return 1;

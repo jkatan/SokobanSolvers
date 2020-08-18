@@ -3,6 +3,9 @@ import solvers.SearchSolver;
 import solvers.informed.AStarSolver;
 import solvers.informed.GGSSolver;
 import solvers.informed.IDAStarSolver;
+import solvers.informed.heuristics.FrozenBoxesHeuristic;
+import solvers.informed.heuristics.Heuristic;
+import solvers.informed.heuristics.LinearConflictHeuristic;
 import solvers.informed.heuristics.ManhattanDistanceHeuristic;
 import solvers.uninformed.BFSSolver;
 import solvers.uninformed.DFSSolver;
@@ -42,15 +45,15 @@ public class SokobanSolver {
                 ((IDDFSSolver) searchSolver).iddfsSolver(initialState, maxDepth);
                 break;
             case "astar":
-                searchSolver = new AStarSolver(new ManhattanDistanceHeuristic());
+                searchSolver = new AStarSolver(new LinearConflictHeuristic());
                 searchSolver.solve(initialState, maxDepth);
                 break;
             case "ggs":
-                searchSolver = new GGSSolver(new ManhattanDistanceHeuristic());
+                searchSolver = new GGSSolver(new LinearConflictHeuristic());
                 searchSolver.solve(initialState, maxDepth);
                 break;
             case "idastar":
-                searchSolver = new IDAStarSolver(new ManhattanDistanceHeuristic());
+                searchSolver = new IDAStarSolver(new LinearConflictHeuristic());
                 searchSolver.solve(initialState, maxDepth);
                 break;
             case "interactive":
