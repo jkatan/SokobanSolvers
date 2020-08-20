@@ -1,4 +1,11 @@
 # SokobanSolvers
+A set of search algorithms implementations to find a solution for a given initial state in the game Sokoban. These search algorithms include:
+* DFS
+* BFS
+* IDDFS
+* A*
+* Global greedy search
+* IDA*
 
 ## Configurations
 Configurations can be found in `src/config.properties`. There you can swap out the different search methods and depth analysis, as well as select which map you'd like to play on.
