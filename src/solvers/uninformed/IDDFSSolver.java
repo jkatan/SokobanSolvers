@@ -18,7 +18,7 @@ public class IDDFSSolver extends DFSSolver {
             if (solution != null) {
                 long endTime = System.currentTimeMillis();
                 long elapsedTime = endTime - startTime;
-                printSolutionInformation(solution, elapsedTime, iterations);
+                printSolutionInformation(solution, elapsedTime, iterations, "iddfs");
                 return;
             }
             resetState();

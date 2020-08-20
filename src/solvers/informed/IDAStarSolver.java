@@ -48,7 +48,7 @@ public class IDAStarSolver extends AStarSolver {
     }
 
     @Override
-    public void solve(GameState initialState, int maxDepth) throws InterruptedException {
+    public void solve(GameState initialState, int maxDepth, String methodUsed) throws InterruptedException {
         int initialThreshold = heuristic.apply(new Node(initialState));
         int currentIteration = 1;
         long startTime = System.currentTimeMillis();
@@ -67,7 +67,7 @@ public class IDAStarSolver extends AStarSolver {
 
         long endTime = System.currentTimeMillis();
         long elapsedTime = endTime - startTime;
-        printSolutionInformation(solutionNode, elapsedTime, currentIteration);
+        printSolutionInformation(solutionNode, elapsedTime, currentIteration, "idastar");
     }
 
     @Override

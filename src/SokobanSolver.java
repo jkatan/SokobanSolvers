@@ -37,11 +37,11 @@ public class SokobanSolver {
         switch (methodToUse) {
             case "bfs":
                 searchSolver = new BFSSolver();
-                searchSolver.solve(initialState, maxDepth);
+                searchSolver.solve(initialState, maxDepth, methodToUse);
                 break;
             case "dfs":
                 searchSolver = new DFSSolver(maxDepth != IGNORE_DEPTH);
-                searchSolver.solve(initialState, maxDepth);
+                searchSolver.solve(initialState, maxDepth, methodToUse);
                 break;
             case "iddfs":
                 searchSolver = new IDDFSSolver();
@@ -49,15 +49,15 @@ public class SokobanSolver {
                 break;
             case "astar":
                 searchSolver = new AStarSolver(heuristicToUse);
-                searchSolver.solve(initialState, maxDepth);
+                searchSolver.solve(initialState, maxDepth, methodToUse);
                 break;
             case "ggs":
                 searchSolver = new GGSSolver(heuristicToUse);
-                searchSolver.solve(initialState, maxDepth);
+                searchSolver.solve(initialState, maxDepth, methodToUse);
                 break;
             case "idastar":
                 searchSolver = new IDAStarSolver(heuristicToUse);
-                searchSolver.solve(initialState, maxDepth);
+                searchSolver.solve(initialState, maxDepth, methodToUse);
                 break;
             case "interactive":
                 startInteractiveMode(gameBoard);

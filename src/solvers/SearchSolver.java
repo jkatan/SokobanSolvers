@@ -3,6 +3,12 @@ package solvers;
 import java.util.*;
 
 import board.GameBoard;
+import solvers.informed.AStarSolver;
+import solvers.informed.GGSSolver;
+import solvers.informed.IDAStarSolver;
+import solvers.uninformed.BFSSolver;
+import solvers.uninformed.DFSSolver;
+import solvers.uninformed.IDDFSSolver;
 import states.Direction;
 import states.GameState;
 import states.Node;
@@ -19,13 +25,13 @@ public abstract class SearchSolver {
         visitedStatesDepth = new HashMap<>();
     }
 
-    public void solve(GameState initialState, int maxDepth) throws InterruptedException {
+    public void solve(GameState initialState, int maxDepth, String methodUsed) throws InterruptedException {
         long startTime = System.currentTimeMillis();
         Node solutionNode = startSearch(initialState, maxDepth);
         long endTime = System.currentTimeMillis();
         if (solutionNode != null) {
             long elapsedTime = endTime - startTime;
-            printSolutionInformation(solutionNode, elapsedTime, maxDepth);
+            printSolutionInformation(solutionNode, elapsedTime, maxDepth, methodUsed);
         } else {
             System.out.println("Solution not found...");
         }
@@ -63,7 +69,7 @@ public abstract class SearchSolver {
         }
     }
 
-    protected void printSolutionInformation(Node solutionNode, long elapsedTime, int maxDepth) {
+    protected void printSolutionInformation(Node solutionNode, long elapsedTime, int maxDepth, String methodUsed) {
         System.out.println("Game won");
         ArrayList<Direction> actionsToWin = new ArrayList<>();
         Node current = solutionNode;
@@ -73,9 +79,19 @@ public abstract class SearchSolver {
             current = current.getParent();
         }
         Collections.reverse(actionsToWin);
-        if (solutionNode != null) {
-            System.out.println("Solution cost = " + solutionNode.getAccumulatedCost() + solutionNode.getStateHeuristicValue());
+        System.out.println("Method used: " + methodUsed);
+        switch (methodUsed) {
+            case "astar":
+            case "ggs":
+            case "idastar":
+                if (solutionNode != null) {
+                    System.out.println("Solution cost = " + solutionNode.getAccumulatedCost() + solutionNode.getStateHeuristicValue());
+                }
+                break;
+            default:
+                break;
         }
+
         System.out.println("[SOLUTION] Actions taken to win:");
         System.out.println(actionsToWin);
         System.out.println("Maximum depth used: " + (maxDepth == IGNORE_DEPTH ? "none specified" : maxDepth));
