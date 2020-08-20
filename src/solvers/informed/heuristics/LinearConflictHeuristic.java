@@ -82,7 +82,7 @@ public class LinearConflictHeuristic extends ManhattanDistanceHeuristic {
                 case LEFT:
                     boxSweepPosition.y -= 1;
                     break;
-                case NONE:
+                case ROOT:
                     break;
             }
 

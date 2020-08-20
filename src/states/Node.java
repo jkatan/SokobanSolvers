@@ -23,7 +23,7 @@ public class Node implements Comparable<Node> {
     }
 
     public Node(GameState gameState) {
-        actionTaken = Direction.NONE;
+        actionTaken = Direction.ROOT;
         children = new ArrayList<>();
         this.gameState = gameState;
         parent = null;
