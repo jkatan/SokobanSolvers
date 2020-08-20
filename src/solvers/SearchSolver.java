@@ -73,6 +73,9 @@ public abstract class SearchSolver {
             current = current.getParent();
         }
         Collections.reverse(actionsToWin);
+        if (solutionNode != null) {
+            System.out.println("Solution cost = " + solutionNode.getAccumulatedCost() + solutionNode.getStateHeuristicValue());
+        }
         System.out.println("[SOLUTION] Actions taken to win:");
         System.out.println(actionsToWin);
         System.out.println("Maximum depth used: " + (maxDepth == IGNORE_DEPTH ? "none specified" : maxDepth));

@@ -32,7 +32,9 @@ public class SokobanSolver {
         SearchSolver searchSolver;
         int maxDepth = Integer.parseInt(properties.getProperty("depth"));
         Heuristic heuristicToUse = getHeuristicFromProperty(properties.getProperty("heuristic"));
-        switch (properties.getProperty("methodType")) {
+        String methodToUse = properties.getProperty("methodType");
+        System.out.println("Solver will use method: " + methodToUse);
+        switch (methodToUse) {
             case "bfs":
                 searchSolver = new BFSSolver();
                 searchSolver.solve(initialState, maxDepth);
